@@ -1,0 +1,85 @@
+extend layout
+block content
+    .container
+        ol.breadcrumb
+            li.active  Vendedores
+            li.active #{user.nit}
+        if(success!=null)
+            .alert.alert-success.alert-dismissible(role="alert" style="")
+                button.close(type="button" data-dismiss="alert")
+                    span(aria-hidden="true") &times;
+                    span.sr-only Close
+                | La venta ha sido registrada exitosamente. Vendedor: 
+                strong  #{success}
+        
+        .row#vendors
+            .panel.panel-default 
+                .panel-body
+                    .row                    
+                        .col-md-4
+                                form.navbar-form(role="search")
+                                .input-group
+                                    input.search.form-control(type="text" placeholder="Buscar" name="q")
+                                    .input-group-btn
+                                        button.btn.btn-default(type="submit")
+                                            i.glyphicon.glyphicon-search            
+                        .pull-right
+                            .col-md-5
+                               .navbar-form
+                                    a(href="/vendedores/historial/General/#{user.nit}" title="Historial General Ventas")
+                                        .btn.btn-success.btn-sm    
+                                            span.glyphicon.glyphicon-list-alt
+                                            |    Historial General 
+
+                            if user.permission
+                                .col-md-4
+                                    .navbar-form
+                                        a(href="/vendedores/nuevo")
+                                            .btn.btn-success.btn-sm
+                                                span.glyphicon.glyphicon-plus   
+                                                |   Nuevo                
+                table.table
+                    thead
+                        tr
+                            th.sort(data-sort="fname") Nombre
+                            th.sort(data-sort="lname") Apellido 
+                            th.sort(data-sort="nit") Identificación
+                            th.sort(data-sort="cargo") Cargo
+                            th.sort(data-sort="email") Email
+                            th.sort(data-sort="celular") Celular
+                            th.sort(data-sort="ciudad") Ciudad
+                            th(style="width: 25px;")
+                            th(style="width: 25px;")
+                    tbody.list
+                        each vendor in vendors
+                            tr( )
+                                td.fname(style="text-transform:capitalize;") #{vendor.nombre}
+                                td.lname(style="text-transform:capitalize;") #{vendor.apellido}
+                                td.nit #{vendor.identificacion}
+                                td.cargo(style="text-transform:capitalize;") #{vendor.cargo}
+                                td.email(style="text-transform:lowercase;") #{vendor.email}
+                                td.celular #{vendor.celular}
+                                td.ciudad(style="text-transform:capitalize;") #{vendor.ciudad}
+                                
+                                if user.permissionVentas
+                                    td
+                                        a(onclick="registrarVenta('#{vendor.identificacion}')" style="cursor:pointer" title="Registrar venta")
+                                            i.glyphicon.glyphicon-plus-sign
+
+block scripts
+    script.
+        // Registar Venta
+        function registrarVenta(iden){
+            $.ajax({
+               type: "get",
+               url: "/api/isCampanaActive",
+               success: function(response){
+                 if(response.success){
+                    window.location = '/vendedores/venta/' + iden;
+                 }
+                 else{
+                    errAlert("<strong>Atención!</strong> " + response.err);
+                 }
+               }
+            });
+        }

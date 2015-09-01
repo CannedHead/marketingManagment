@@ -1,0 +1,55 @@
+extend layout
+block content
+    .container
+        ol.breadcrumb
+            li
+                a(href="/vendedores") Vendedores
+            li.active Configuración
+
+        form.col-md-6#changepasswordform( method="post" action="/change-password" role="form")
+            .page-header
+              h4 Cambiar contraseña  
+            input(type= "hidden" name="id" value="#{user._id}")
+            .form-group
+                label(for="exampleInputEmail1") Antigua Contraseña
+                input.form-control(type="password" , name="oldPassword")
+            .form-group
+                label(for="exampleInputEmail1") Nueva contraseña
+                input.form-control#newPassword(type="password", name="newPassword")
+            .form-group
+                label(for="exampleInputEmail1") Confirmar nueva contraseña
+                input.form-control#confirmNewPassword(type="password" name="confirmNewPassword")
+            button.btn.btn-success(type="submit" form="changepasswordform") Cambiar contraseña
+block scripts
+    script.
+        $(document).ready(function(){
+            $('#changepasswordform').submit(function(evt){
+
+                evt.preventDefault();
+
+                var pass1 = $("#newPassword").val(); 
+                var pass2 = $("#confirmNewPassword").val(); 
+                
+                if(pass1 == pass2 && pass1.length !== 0 && pass2.length !== 0){
+                    var url = $(this).attr("action");
+                    var formData = $(this).serialize();
+                    $.ajax(url,{
+                        data : formData ,
+                        type : "POST",
+                                    
+                        success : function(response){ 
+                            console.log(response);
+                            if(response.err){    
+                                errAlert('Se ha producido un error')                                                   
+                            } else {
+                                 window.location = '/vendedores';                                                 
+                            }
+                        }
+                    });
+                } else {
+                    errAlert('La nueva contraseña y su confirmación no concuerdan') ;
+                }             
+            });
+        });
+        
+        

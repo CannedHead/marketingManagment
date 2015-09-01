@@ -1,0 +1,149 @@
+doctype html
+html(lang="es")
+  head
+    meta(charset="utf-8")
+    title Renoboy | Plan de millas
+
+    meta(name="description",content="Renoboy - Plan de millas")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+
+    link(href="favicon.png" rel="shortcut icon" type="image/png")  
+    link(href="/css/bootstrap.css", rel="stylesheet")
+    link(href="/css/style.css", rel="stylesheet")
+    
+  body
+    <!-- Brand and toggle get grouped for better mobile display -->
+    nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
+        .container-fluid
+            .navbar-header                
+                button.navbar-toggle(type="button",  data-toggle="collapse" data-target="#bs-example-navbar-collapse-1")
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                a.navbar-brand(href="/vendedores") 
+                    img.img-responsive(src="/img/logo.png" style="width:150px; margin-top:-35px;")
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            .collapse.navbar-collapse#bs-example-navbar-collapse-1
+                ul.nav.navbar-nav
+                    li
+                        a(href="/vendedores") Vendedores
+                ul.nav.navbar-nav.navbar-right
+                    li
+                        a(href="/config") 
+                            i.glyphicon.glyphicon-cog
+                            |   Configuración
+                    li
+                        a(href="/logout") 
+                            i.glyphicon.glyphicon-log-out
+                            |   Salir
+
+        .alert.alert-success#success.navbar-fixed-top(style='width:100%; z-index:1031; display:none;')
+            p.text-center(style='font-size: 1.2em') <strong>Exito!</strong> Tu informacion se ha guardado correctamente.  
+
+        .alert.alert-warning#missing.navbar-fixed-top(style='width:100%; z-index:1031; display:none;')
+            p.text-center(style='font-size: 1.2em') <strong>Atencion!</strong> El numero de documento es requerido para agregar un diagnostico. 
+
+        .alert.alert-warning#error.navbar-fixed-top(style='width:100%; z-index:1031; display:none;')
+            p.text-center#error_p(style='font-size: 1.2em') 
+
+    .container
+        block content        
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    script(src="/js/bootstrap.min.js")
+    script(type="text/javascript" src="/js/moment.min.js")
+    script(type="text/javascript" src="/js/es.js")
+    script(type="text/javascript" src="/js/daterangepicker.js")
+    script(type="text/javascript" src="/js/list.min.js")
+    block scripts
+    script(type="text/javascript").
+        //------------------
+        // ALERTS
+        //------------------
+        //Success alert   
+        function successAlert(){
+            $('#success').fadeIn('slow');
+            setTimeout(function(){
+                $('#success').fadeOut('slow');  
+            }, 3500);                           
+            $("body").css("cursor", "default"); // Change cursor to default                           
+        }
+        //Error alert   
+        function errAlert(message){
+            $('#error_p').html(message);
+            $('#error').fadeIn('slow');
+            setTimeout(function(){
+                $('#error').fadeOut('slow');  
+            }, 3500);                            
+            $("body").css("cursor", "default"); // Change cursor to default                    
+        }
+        //Warning alert        
+        function warningAlert(message){
+            $('#warning_p').html(message);
+            $('#warning_list').html('');
+            $('#warning').fadeIn('slow');
+            setTimeout(function(){
+                $('#warning').fadeOut('slow');;  
+            }, 4000);                           
+            $("body").css("cursor", "default"); // Change cursor to default                           
+        }        
+        function post(path, params, method) {
+            method = method || "post"; 
+
+            var form = document.createElement("form");
+            form.setAttribute("method", method);
+            form.setAttribute("action", path);
+
+            for(var key in params) {
+                if(params.hasOwnProperty(key)) {
+                    var hiddenField = document.createElement("input");
+                    hiddenField.setAttribute("type", "hidden");
+                    hiddenField.setAttribute("name", key);
+                    hiddenField.setAttribute("value", params[key]);
+
+                    form.appendChild(hiddenField);
+                 }
+            };
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+        /*
+        // Configure daterangepicker
+        moment.lang('es');
+        $('#reportrange').daterangepicker(
+            {
+              ranges: {
+                 'Hoy': [moment(), moment()],
+                 'Ayer': [moment().subtract('days', 1), moment().subtract('days', 1)],
+                 'Ultimos 7 Dias': [moment().subtract('days', 6), moment()],
+                 'Ultimos 30 Dias': [moment().subtract('days', 29), moment()],
+                 'Este Mes': [moment().startOf('month'), moment().endOf('month')],
+                 'Mes Pasado': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+              },
+              startDate: moment().subtract('days', 29),
+              endDate: moment()
+            },
+            function(start, end) {
+                $('#reportrange span').html(start.format('MMMM DD, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+
+                if(#{general}){
+                    post("/vendedores/historial/general/range/#{user.nit}",{start:start, end:end});
+                    
+                }
+                else if(#{total})
+                {
+                    post("/admin/vendedores/historial/total/range",{start:start, end:end});    
+                }
+                else if(#{admin})
+                {
+                    post("/admin/vendedores/historial/range/#{nit}/#{vendor}",{start:start, end:end});    
+                }
+                else {
+                    post("/vendedores/historial/range/#{vendor}",{start:start, end:end});   
+                }               
+            }
+        );
+        */
+        
+        

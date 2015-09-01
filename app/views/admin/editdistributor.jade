@@ -1,0 +1,92 @@
+extend layout
+block content
+    .container
+        ol.breadcrumb
+            li
+                a(href="/admin") Distribuidores
+             li.active Editar
+        .row
+            form(action="/admin/editar-distribuidor" method="post")
+                .col-md-12
+                    .col-md-6   
+                        .form-group
+                            label NIT
+                            input.form-control(name="id", type="hidden", value="#{dist._id}")
+                            input.form-control(type="text" name="nit" value="#{dist.nit}" required disabled)                       
+                        .form-group
+                            label Nombre 
+                            input.form-control(type="text" name="fname" value="#{dist.first}" required)  
+                        .form-group
+                            label Apellido
+                            input.form-control(type="text" name="lname" value="#{dist.last}" required) 
+                        .form-group
+                            label Email
+                            input.form-control(type="email" name="email" value="#{dist.email}" required) 
+                    .col-md-6 
+                        .form-group
+                            label Departamento
+                            select.form-control(name="departamento" required)
+                                option(value="Bogota") Seleccione un Departamento
+                                option(value="Bogota") Seleccione un Departamento
+                                option(value="Amazonas") Amazonas
+                                option(value="Antioquia") Antioquia
+                                option(value="Arauca") Arauca
+                                option(value="Atlantico") Atlantico
+                                option(value="Bolivar") Bolivar
+                                option(value="Boyaca") Boyaca
+                                option(value="Caldas") Caldas
+                                option(value="Caqueta") Caqueta
+                                option(value="Casanare") Casanare
+                                option(value="Cauca") Cauca
+                                option(value="Cesar") Cesar
+                                option(value="Choco") Choco
+                                option(value="Cordoba") Cordoba
+                                option(value="Cundinamarca") Cundinamarca
+                                option(value="Guania") Guania
+                                option(value="Guaviare") Guaviare
+                                option(value="Huila") Huila
+                                option(value="Guajira") La Guajira
+                                option(value="Magdalena") Magdalena
+                                option(value="Meta") Meta
+                                option(value="Nariño") Nariño
+                                option(value="Norte de Santander") Norte de Santander
+                                option(value="Putumayo") Putumayo
+                                option(value="Quindio") Quindio
+                                option(value="Risaralda") Risaralda
+                                option(value="Santander") Santander 
+                                option(value="Sucre") Sucre
+                                option(value="Tolima") Tolima 
+                                option(value="Valle del cauca") Valle del cauca
+                                option(value="Vaupes") Vaupes
+                                option(value="Vichada") Vichada                             
+                        .form-group
+                            label Ciudad
+                            select.form-control(name="ciudad" required)
+                                option(value="Aguachica") Aguachica
+                                option(value="Armenia") Armenia
+                                option(value="Bogota") Bogotá
+                                option(value="Barrancabermeja") Barrancabermeja 
+                                option(value="Barranquilla") Barranquilla
+                                option(value="Bucaramanga") Bucaramanga
+                                option(value="Cucuta") Cucuta 
+                                option(value="Cali") Cali
+                                option(value="Cartagena") Cartagena
+                                option(value="Duitama") Duitama
+                                option(value="Florencia") Florencia 
+                                option(value="Fusagasuga") Fusagasuga
+                                option(value="Ibague") Ibague
+                                option(value="Manizales") Manizales
+                                option(value="Medellin") Medellin 
+                                option(value="Neiva") Neiva
+                                option(value="Ocaña") Ocaña
+                                option(value="Pasto") Pasto
+                                option(value="Pereira") Pereira
+                                option(value="Sogamoso") Sogamoso
+                                option(value="Tulua") Tulua
+                                option(value="Tunja") Tunja
+                                option(value="Ubate") Ubate
+                                option(value="Villavicencio") Villavicencio                  
+                    .col-md-12
+                        hr 
+                        .pull-right
+                            button.btn.btn-success(type="submit") Guardar

@@ -1,0 +1,99 @@
+extend ../layout
+block content
+    .container      
+        h1 
+            if campana.active
+                span.loader.loader-2
+                |   #{campana.nombre} 
+            else
+                span.loader(style="background-color:red !important;")
+                |   #{campana.nombre}    
+            
+        h2 #{campana.fechaAperturaFormat} - #{campana.fechaCierreFormat}  
+        .col-md-12#salesCampanas        
+            .row.form-group
+                .col-md-4.col-sm-6.col-xs-9
+                    input.search.form-control(type="text" placeholder="Buscar" name="q") 
+                .pull-right
+                        .btn-group.campana-opt
+                            a#dlink(style="display:none;") 
+                            button.btn.btn-success(type="button" onclick="tableToExcel('example', 'example', '#{campana.nombre}.xls')")
+                                span.fa.fa-file-excel-o
+                            button.btn.btn-danger(type="button" data-toggle="modal", data-target="#deleteCampanaModal", href="/admin/#",data-dismiss="modal")
+                                span.glyphicon.glyphicon-trash
+                            a(href="/admin/campanas/nueva")
+                                button.btn.btn-info(type="button") 
+                                    span.glyphicon.glyphicon-plus
+            .table-responsive.table-shadow                  
+                table.table#example
+                        thead
+                            tr#headingHistorial
+                                th.sort(data-sort="fecha" style="text-align:center;") Fecha
+                                th NIT
+                                th Nombre Distribuidor
+                                th Ciudad
+                                th.sort(data-sort="cc" style="text-align:center;") CC
+                                th.sort(data-sort="nombre" style="text-align:center;") Nombre
+                                th Cargo
+                                th Email
+                                th Celular
+                                th.sort(data-sort="registro" style="text-align:center;") Tipo Registro
+                                each campo in campana.fields
+                                    th(style="text-align:center;") #{campo.name}
+                                th(style="text-align:center;") Total
+                                th ID Distribuidor
+                        tbody.list#bodyHistorial
+                            each venta in ventas
+                                tr
+                                    td.fecha(style="text-align:center; text-transform:capitalize;") #{venta.fechainformat}
+                                    td #{venta.nit}
+                                    td #{venta.nomDist}
+                                    td #{venta.ciudad}
+                                    td.cc(style="text-align:center") #{venta.vendedor}
+                                    td.nombre(style="text-align:center") #{venta.nomVend}
+                                    td #{venta.cargoVend}
+                                    td #{venta.emailVend}
+                                    td #{venta.celularVend}
+                                    td.registro(style="text-align:center") SO
+                                    -var SO = 0
+                                    each campoVenta in venta.fields
+                                        -SO = SO + campoVenta.value 
+                                        td(style="text-align:center") #{campoVenta.value}
+                                    td(style="text-align:center") #{SO}     
+                                    td #{venta.distribuidor}                       
+
+                                tr
+                                    td.fecha(style="text-align:center; text-transform:capitalize;") #{venta.fechainformat}
+                                    td #{venta.nit}
+                                    td #{venta.nomDist}
+                                    td #{venta.ciudad}
+                                    td.cc(style="text-align:center") #{venta.vendedor}
+                                    td.nombre(style="text-align:center") #{venta.nomVend}
+                                    td #{venta.cargoVend}
+                                    td #{venta.emailVend}
+                                    td #{venta.celularVend}
+                                    td.registro(style="text-align:center") MILLAS
+                                    -var millas = 0
+                                    each campoVenta in venta.fields
+                                        each campo1 in campana.fields
+                                            if campoVenta.name == campo1.name
+                                                -millas = millas + campoVenta.value*campo1.value
+                                                td(style="text-align:center") #{campoVenta.value*campo1.value}
+                                    td(style="text-align:center") #{millas}
+                                    td #{venta.distribuidor}    
+                       
+                        
+    <!-- Delete Campana Modal -->
+    .modal.fade#deleteCampanaModal(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;     
+                    h4.modal-title ¿Está seguro que desea eliminar esta Campaña?                                    
+                .modal-body
+                    form
+                        p Toda la información de esta campaña será eliminada del sistema. 
+                        br     
+                .modal-footer
+                    button.btn(data-dismiss="modal" aria-hidden="true") Cancelar
+                    a.btn.btn-danger Eliminar

@@ -1,0 +1,112 @@
+extend ../layout
+block content
+    .container
+        .col-md-10.col-md-offset-1#campanas        
+            .row.form-group
+                .col-md-5.col-sm-6.col-xs-9
+                    input.search.form-control(type="text" placeholder="Buscar" name="q") 
+                .pull-right
+                        .btn-group.campana-opt
+                            a(href="/admin/historialTotal")
+                                button.btn.btn-info(type="button" alt='Historial total')
+                                    span.glyphicon.glyphicon-list-alt
+                            button.btn.btn-danger(type="button" onclick='deleteModal()')
+                                span.glyphicon.glyphicon-trash
+                            a(href="/admin/campanas/nueva" alt='Nueva Campaña')
+                                button.btn.btn-info(type="button")
+                                    span.glyphicon.glyphicon-plus
+            .table-responsive.table-shadow                  
+                table.table.table-hover
+                    thead
+                        tr
+                           th(style="width:2px;")
+                           th.sort(data-sort="nombre") Nombre 
+                           th.sort(data-sort="fechaApertura") Fecha Apertura
+                           th.sort(data-sort="fechaCierre") Fecha Cierre 
+                           th Status
+                    tbody.list                                      
+                        each campana in campanas
+                                tr
+                                    td 
+                                        input(type="checkbox" class="deleteCheckbox" value='#{campana._id}')
+                                    td.nombre 
+                                        a(href="/admin/campana/#{campana._id}") #{campana.nombre}
+                                    td.fechaApertura #{campana.fechaAperturaFormat}
+                                    td.fechaCierre #{campana.fechaCierreFormat}
+                                    td.status(onclick='cambiarStatus("#{campana._id}")' style="cursor:pointer;")  
+                                        if campana.active
+                                            .bullet.active
+                                            |   Abierta
+                                        else
+                                            .bullet.inactive
+                                            |   Cerrada     
+                                
+    
+    <!-- Delete Campana Modal -->
+    .modal.fade#deleteCampanaModal(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;     
+                    h4.modal-title ¿Está seguro que desea eliminar esta Campaña?                                    
+                .modal-body
+                    form
+                        p#deleteModal_p Toda la información de esta campaña será eliminada del sistema. 
+                        br     
+                .modal-footer
+                    button.btn(data-dismiss="modal" aria-hidden="true") Cancelar
+                    a.btn.btn-danger(onclick='deleteCampanas()')  Eliminar
+
+
+    block scripts
+        script(type="text/javascript").
+            function deleteModal(){
+                len = $('input:checkbox.deleteCheckbox:checked').length
+                if(len == 0){
+                    warningAlert('<strong>Atencion!</strong> No has seleccionado ningun elemento para eliminar.');
+                }else if(len == 1){
+                    $('#deleteModal_p').html('').html('Toda la información de esta campaña será eliminada del sistema.');
+                    $('#deleteCampanaModal').modal('show');
+                }
+                else{
+                    $('#deleteModal_p').html('').html('Toda la información de estas campañas será eliminada del sistema.');
+                    $('#deleteCampanaModal').modal('show');
+                }
+            }
+            function deleteCampanas(){
+                var campanas = [];
+                $('input:checkbox.deleteCheckbox:checked').each(function(){
+                    campanas.push($(this).val());
+                });
+                $.ajax({
+                   type: "delete",
+                   data: {campanas: campanas},
+                   url: "/admin/campanas",
+                   success: function(response){
+                     if(response.success){
+                        console.log('success');
+                        window.location = '/admin/campanas';
+                     }
+                     else{
+                        errAlert('ha sucedido un error');
+                     }
+                   }
+                });                
+            };
+            function cambiarStatus(id){
+                $.ajax({
+                   type: "patch",
+                   data: {id: id},
+                   url: "/admin/campanas",
+                   success: function(response){
+                     if(response.success){
+                        console.log('success');
+                        window.location = '/admin/campanas';
+                     }
+                     else{
+                        errAlert('ha sucedido un error');
+                     }
+                   }
+                });                
+            };
+            

@@ -1,0 +1,129 @@
+extend layout
+block content
+    .container
+        if(success!=null)
+            .alert.alert-success.alert-dismissible(role="alert" style="")
+                button.close(type="button" data-dismiss="alert")
+                    span(aria-hidden="true") &times;
+                    span.sr-only Close
+                | La venta ha sido registrada exitosamente. Vendedor: 
+                strong   #{success}
+        #distributer  
+            .row.form-group
+                .col-md-5.col-sm-6.col-xs-9
+                    input.search.form-control(type="text" placeholder="Buscar" name="q") 
+                .pull-right
+                        .btn-group.campana-opt
+                            a#dlink(style="display:none;") 
+                            button.btn.btn-success(type="button" onclick="tableToExcel('example', 'example', 'distribuidores.xls')")
+                                span.fa.fa-file-excel-o
+                            button.btn.btn-danger(type="button" onclick='deleteModal()')
+                                span.glyphicon.glyphicon-trash
+                            a(href="/admin/nuevo-distribuidor")
+                                button.btn.btn-info(type="button")
+                                    span.glyphicon.glyphicon-plus
+
+            .row  
+                .panel.panel-default  
+                    .panel-body
+                        .col-sm-6
+                            h1(style="text-align:left; width:100px") Distribuidores
+                        .pull-right(style="position:relative; top:20px")
+                            .btn-group.btn-group-sm(role="group" aria-label="...")
+                              .btn-group.btn-group-sm(role="group")
+                                button.btn.btn-default.dropdown-toggle(type="button" data-toggle="dropdown" aria-expanded="false")
+                                  | Registro Vendedores 
+                                  span.caret
+                                ul.dropdown-menu(role="menu")
+                                    li
+                                        a(href="/admin/distribuidores/bloquearTodos") Bloquear todos
+                                    li
+                                        a(href="/admin/distribuidores/permitirTodos") Habilitar todos
+                              .btn-group.btn-group-sm(role="group")
+                                button.btn.btn-default.dropdown-toggle(type="button" data-toggle="dropdown" aria-expanded="false")
+                                  | Registro Ventas 
+                                  span.caret
+                                ul.dropdown-menu(role="menu")
+                                    li
+                                        a(href="/admin/distribuidores/bloquearVentas") Bloquear ventas
+                                    li
+                                        a(href="/admin/distribuidores/permitirVentas") Habilitar ventas   
+                    .table-responsive  
+                        table.table#example
+                            thead
+                                tr
+                                    th.sort(data-sort="id") ID
+                                    th.sort(data-sort="nit") NIT
+                                    th.sort(data-sort="fname") Nombre
+                                    th.sort(data-sort="lname") Apellido 
+                                    th.sort(data-sort="email") Email
+                                    th.sort(data-sort="cuidad") Ciudad
+                                    th.sort(data-sort="ultimo") Ultimo ingreso
+                                    th(style="width: 20px;")
+                                    th(style="width: 20px;")
+                                    th(style="width: 20px;")
+                                    th(style="width: 20px;")
+                                    th(style="width: 20px;")
+                            tbody.list
+                                each distributer in distributers
+                                    tr
+                                        td.id #{distributer._id}
+                                        td.nit #{distributer.nit}
+                                        td.fname(style="text-transform:capitalize;") #{distributer.first}
+                                        td.lname(style="text-transform:capitalize;") #{distributer.last}
+                                        td.email(style="text-transform:lowercase;") #{distributer.email}
+                                        td.ciudad(style="text-transform:capitalize;") #{distributer.city}
+                                        td.ultimo(style="text-transform:capitalize;") #{distributer.fechainformat}
+                                        td                                 
+                                            a(href="/admin/distribuidor/#{distributer.nit}?distribuidor=#{distributer._id}" title="Vendedores")
+                                                i.glyphicon.glyphicon-list-alt
+                                        td                                 
+                                            a(href="/admin/distribuidor/edit/#{distributer.id}" title="Editar" style="color:#5BC0DE;")
+                                                i.glyphicon.glyphicon-pencil
+                                        td                                 
+                                            a.delete_dist(data-toggle="modal", data-target="#deleteModal", href="/admin/#",data-dismiss="modal" data-distribuidor='#{distributer.first +" "+ distributer.last}' data-id="#{distributer._id}" style="color:#D9534F;" title="Eliminar")
+                                                i.glyphicon.glyphicon-remove
+                                        td                                 
+                                            if  distributer.permission
+                                                a(href="/admin/distribuidor/permiso/#{distributer.id}"  title="Cambiar a bloqueado")
+                                                    i.glyphicon.glyphicon-lock
+                                            else
+                                                a(href="/admin/distribuidor/permiso/#{distributer.id}" style="color:#666;" title="Cambiar a desbloqueado")
+                                                    i.glyphicon.glyphicon-lock
+                                        td                                 
+                                            if  distributer.permissionVentas
+                                                a(href="/admin/distribuidor/permisoVentas/#{distributer.id}"  title="Cambiar a prohibir ventas")
+                                                    i.glyphicon.glyphicon-usd
+                                            else
+                                                a(href="/admin/distribuidor/permisoVentas/#{distributer.id}" style="color:#666;" title="Cambiar a permitir ventas")
+                                                    i.glyphicon.glyphicon-usd          
+
+    
+    <!-- Delete Modal -->
+    .modal.fade#deleteModal(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;     
+                    h4.modal-title ¿Está seguro que desea eliminar este distribuidor?                                    
+                .modal-body
+                    form(action="/reset-password",method="post", role="form")
+                        p#deleteMsn Toda la información del distribuidor será eliminada del sistema junto con la información de sus ventas. 
+                        br     
+                .modal-footer
+                    button.btn(data-dismiss="modal" aria-hidden="true") Cancelar
+                    a.btn.btn-danger#deleteBtn Eliminar
+block scripts
+    script.
+        //----------------------------------------------------------------
+        // eliminar distribuidor
+        //----------------------------------------------------------------
+        $('#example').on('click', 'a.delete_dist', function(evt){
+            evt.preventDefault();
+            var id = $(this).data('id');
+            var nombre = $(this).data('distribuidor');
+            $('#deleteMsn').html('').html('Toda la información del distribuidor <b>'+nombre+'</b> será eliminada del sistema junto con la información de sus ventas. ')            
+            $('#deleteBtn').attr('href', '/admin/distribuidor/rm/' + $(this).data('id'));
+            $('#deleteModal').modal('hide');
+        });
+        

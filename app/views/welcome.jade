@@ -1,0 +1,74 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    title Renoboy | Plan de millas
+
+    meta(name="description",content="Renoboy - Plan de millas")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+
+    link(href="favicon.png" rel="shortcut icon" type="image/png")  
+    link(href="/css/bootstrap.css", rel="stylesheet")
+    link(href="/css/style.css", rel="stylesheet")
+    
+  body.bg    
+    .col-md-12.header
+        .col-md-2.col-md-offset-5
+            img.logo(src="/img/logo.png")
+    .container
+        .col-md-4.col-md-offset-1.textoLoginPanel.hidden-xs
+            h1.white Plan de Millas
+            h2.green Renoboy 2015.
+            p Bienvenido al portal para el ingreso de ventas correspondiente al Plan de Millas Renoboy 2014, a continuación ingrese con su usuario y clave. 
+            p Si no tiene estos datos por favor contáctese con RENOBOY a los teléfonos:
+            p 
+                |   Tel: 742 - 2779
+                br 
+                |   Fax: 570-1630 
+                br
+                |   Línea de atención: 01 8000 510141
+        .col-md-4.col-md-offset-2
+            .panel.panel-default.signupPanel                    
+                .panel-body
+                    if (success!=null)
+                        .alert.alert-success #{success}
+                    if (error!=null)
+                        .alert.alert-danger #{error}
+                    if (flash!=null)
+                        .alert.alert-danger error
+                    p Completa el registro al sistema agregando una contraseña segura para el ingreso.
+                    form(action="/update-password",method="post", role="form" )
+                        .form-group
+                            input.form-control(name="id", type="hidden", value="#{nuser._id}")
+                            input.form-control(name="first", type="hidden", value="#{nuser.first}")
+                            input.form-control(name="last", type="hidden", value="#{nuser.last}")
+                            input.form-control(name="email", type="hidden", value="#{nuser.email}")    
+                            input.form-control(name="nit", type="hidden", value="#{nuser.nit}")
+                            input.form-control(name="pass", type="password", placeholder="Nueva contraseña")
+                        .form-group
+                            input.form-control(name="passconfirm", type="password", placeholder="Confirmar nueva contraseña")
+                        .form-group
+                            button.btn.btn-success.btn-block(type="submit") Cambiar contraseña
+    .footer
+        .container
+            p.text-muted © 2014 Todos los derechos reservados.
+    <!-- Forgot Password Modal -->
+    .modal.fade#forgotPswdModal(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;     
+                    h4.modal-title ¿Olvidó su contraseña?                                    
+                .modal-body
+                    form(action="/reset-password",method="post", role="form")
+                        p Ingrese su direccion de correo asociada a su cuenta, y nosotros enviaremos un correo con las instrucciones.
+                        .form-group   
+                            label(for="email") Email                          
+                            input#email.form-control(type="email",name="email" ,placeholder="Email")
+                        br                        
+                        .form-group
+                            input.btn.btn-success.btn-block.btn-lg(type="submit" value="Enviar") 
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    script(src="/js/bootstrap.min.js")
