@@ -1,0 +1,14 @@
+{
+    "db": {
+    	"test" : "mongodb://localhost/marketingmanagment",
+    	"sql"  : "",
+    	"mongodb" : ""
+    },
+    
+    "cookie_secret" : "session secret",
+
+    "mailer":{
+    	"user" : "",
+    	"password" : ""
+    }
+}

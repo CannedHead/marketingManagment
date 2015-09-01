@@ -1,0 +1,58 @@
+extend layout
+block content
+    .container
+         ol.breadcrumb
+            li
+                a(href="/admin") Vendedores
+            li.active Listado Total
+        .row#vendors 
+            .panel.panel-default 
+                .panel-body
+                    .row                    
+                        .col-md-4
+                                form.navbar-form(role="search")
+                                .input-group
+                                    input.search.form-control(type="text" placeholder="Buscar" name="q")
+                                    .input-group-btn
+                                        button.btn.btn-default(type="submit")
+                                            i.glyphicon.glyphicon-search                       
+                        .col-md-4
+                            .navbar-form  
+                                .col-md-6                              
+                                    a#dlink(style="display:none;")                                    
+                                    button.btn.btn-info.btn-sm(type="button" onclick="tableToExcel('example', 'example', 'vendedores.xls')") 
+                                        span.glyphicon.glyphicon-cloud-download
+                                        |  Exportar a Excel        
+                    .table-responsive
+                        table.table#example(style="font-size:0.8em;")
+                            thead
+                                tr
+                                    th.sort(data-sort="nit") NIT
+                                    th.sort(data-sort="fname") Nombre
+                                    th.sort(data-sort="lname") Apellido 
+                                    th.sort(data-sort="ccvendedor") ID vendedor 
+                                    th.sort(data-sort="vendedor") vendedor 
+                                    th.sort(data-sort="cargovendedor") Cargo 
+                                    th.sort(data-sort="emailvendedor") Email 
+                                    th.sort(data-sort="celularvendedor") Celular
+                                    th.sort(data-sort="direccionvendedor") Dirección 
+                                    th.sort(data-sort="ciudad")  Ciudad
+                                    th.sort(data-sort="pa")  PA
+                                    th
+                            tbody.list(style="font-size:1.em;")
+                                each vendor in vendors
+                                    tr( )
+                                        td.nit #{vendor.nit}
+                                        td.fname(style="text-transform:capitalize;") #{vendor.nombre}
+                                        td.lname(style="text-transform:capitalize;") #{vendor.apellido}                               
+                                        td.ccvendedor(style="text-transform:capitalize;") #{vendor.identificacion} 
+                                        td.vendedor #{vendor.nombre} #{vendor.apellido}
+                                        td.cargovendedor(style="text-transform:capitalize;") #{vendor.cargo} 
+                                        td.emailvendedor(style="text-transform:capitalize;") #{vendor.email}
+                                        td.celularvendedor(style="text-transform:capitalize;") #{vendor.celular}
+                                        td.direccionvendedor(style="text-transform:capitalize;") #{vendor.direccion}   
+                                        td.ciudad(style="text-transform:capitalize;") #{vendor.ciudad}  
+                                        td.pa(style="text-transform:capitalize;") #{vendor.pa}  
+                                        td
+                                            a(href="/admin/vendedor/edit/#{vendor.identificacion}")
+                                                i.glyphicon.glyphicon-pencil         

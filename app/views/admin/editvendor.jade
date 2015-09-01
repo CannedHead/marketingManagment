@@ -1,0 +1,71 @@
+extend layout
+block content
+    .container
+        ol.breadcrumb
+            li
+                a(href="/admin/distribuidor/#{vendor.nit}?distribuidor=#{vendor.distribuidor}") Vendedores
+            li.active  Editar
+            
+        .row
+            form(action="/admin/vendedor/edit/#{vendor._id}" method="post")
+                .col-md-12
+                    .col-md-6                        
+                        .form-group
+                            input(type="hidden" name= "distribuidor" value="#{user._id}")  
+                            input(type="hidden" name= "nit" value="#{user.nit}")   
+                            input(type="hidden" name= "id" value="#{vendor._id}")   
+                            label Nombre 
+                            input.form-control(type="text" name="nombre" value="#{vendor.nombre}" required)  
+                        .form-group
+                            label Apellido
+                            input.form-control(type="text" name="apellido" value="#{vendor.apellido}" required)
+                        .form-group
+                            label Identificación
+                            input.form-control(type="text" name="identificacion" value="#{vendor.identificacion}" required)  
+                        .form-group.col-md-6
+                            label PA                            
+                                input.form-control(type="number" name="pa" value="#{vendor.pa}" required min="20")  
+                    .col-md-6
+                        .form-group
+                            label Cargo
+                            input.form-control(type="text" name="cargo" value="#{vendor.cargo}" required)  
+                        .form-group
+                            label Email
+                            input.form-control(type="email" name="email" value="#{vendor.email}" required)  
+                        .form-group
+                            label Celular
+                            input.form-control(type="text" name="celular" pattern="[0-9]{10}" value="#{vendor.celular}" required)                            
+                        .form-group
+                            label Ciudad
+                            select.form-control(name="ciudad" required)
+                                option(value="Aguachica",selected='#{vendor.ciudad}' == 'Aguachica') Aguachica
+                                option(value="Armenia",selected='#{vendor.ciudad}' == 'Armenia') Armenia
+                                option(value="Bogota",selected='#{vendor.ciudad}' == 'Bogota') Bogotá
+                                option(value="Barrancabermeja",selected='#{vendor.ciudad}' == 'Barrancabermeja') Barrancabermeja 
+                                option(value="Barranquilla",selected='#{vendor.ciudad}' == 'Barranquilla') Barranquilla
+                                option(value="Bucaramanga",selected='#{vendor.ciudad}' == 'Bucaramanga') Bucaramanga
+                                option(value="Cali",selected='#{vendor.ciudad}' == 'Cali') Cali
+                                option(value="Cartagena",selected='#{vendor.ciudad}' == 'Cartagena') Cartagena
+                                option(value="Cucuta",selected='#{vendor.ciudad}' == 'Cucuta') Cucuta                                 
+                                option(value="Duitama",selected='#{vendor.ciudad}' == 'Duitama') Duitama
+                                option(value="Florencia",selected='#{vendor.ciudad}' == 'Florencia') Florencia 
+                                option(value="Fusagasuga",selected='#{vendor.ciudad}' == 'Fusagasuga') Fusagasuga
+                                option(value="Ibague",selected='#{vendor.ciudad}' == 'Ibague') Ibague
+                                option(value="Manizales",selected='#{vendor.ciudad}' == 'Manizales') Manizales
+                                option(value="Medellin",selected='#{vendor.ciudad}' == 'Medellin') Medellin 
+                                option(value="Neiva",selected='#{vendor.ciudad}' == 'Neiva') Neiva
+                                option(value="Ocaña",selected='#{vendor.ciudad}' == 'Ocaña') Ocaña
+                                option(value="Pasto",selected='#{vendor.ciudad}' == 'Pasto') Pasto
+                                option(value="Pereira",selected='#{vendor.ciudad}' == 'Pereira') Pereira
+                                option(value="Sogamoso",selected='#{vendor.ciudad}' == 'Sogamoso') Sogamoso
+                                option(value="Tulua",selected='#{vendor.ciudad}' == 'Tulua') Tulua
+                                option(value="Tunja",selected='#{vendor.ciudad}' == 'Tunja') Tunja
+                                option(value="Ubate",selected='#{vendor.ciudad}' == 'Ubate') Ubate
+                                option(value="Villavicencio",selected='#{vendor.ciudad}' == 'Villavicencio') Villavicencio 
+                        .form-group
+                            label Direccion de residencia
+                            input.form-control(type="text" name="direccion" value="#{vendor.direccion}" required) 
+                    .col-md-12
+                        hr 
+                        .pull-right
+                            button.btn.btn-success(type="submit") Ingresar
