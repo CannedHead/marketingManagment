@@ -1,63 +1,29 @@
-var LocalStrategy   = require('passport-local').Strategy;
-var User       		= require('../app/models/user');
 
-module.exports = function(passport) {
+/*!
+ * Module dependencies.
+ */
 
-    // =========================================================================
-    // PASSPORT SESSION SETUP ==================================================
-    // =========================================================================
-    
-    // Used to serialize the user for the session
-    passport.serializeUser(function(user, done) {
-        done(null, user.id);
-    });
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
 
-    // Used to deserialize the user
-    passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
-            done(err, user);
-        });
-    });
+var local = require('./passport/local');
 
- 	// =========================================================================
-    // LOCAL SIGNUP ============================================================
-    // =========================================================================
-   
-   /* 
-    passport.use(new LocalStrategy(         
-        { usernameField: 'email' },
-        function (email, password, fn) {
-            User.findOne({'email': email}, function (err, usr) {
-                if (err) {
-                   return fn(err, false, { message: 'An Error occured' });
-                }                
-                if (!usr) {
-                   return fn(err, false, { message: 'Unknown email address ' + email });
-                }
-                User.authenticate(email, password, function (err, valid) {
-                    console.log('jaja '+valid);
-                    if (err) {
-                     return fn(err);
-                    }
-                    // if the password is invalid return that 'Invalid Password' to
-                    // the user
-                    if (!valid) {
-                     return fn(null, false, { message: 'Invalid Password' });
-                    }
-                    return fn(err, usr);
-                });
-            });
-        }
-    ));
-    */
+/**
+ * Expose
+ */
 
-    passport.use(new LocalStrategy({
-        usernameField: 'email'
-    },function(email, password, done) {
-        User.authenticate(email, password, 
-            function(err, user) {
-                return done(err, user)
-            })
-    }));
+module.exports = function (passport, config) {
+  // serialize sessions
+  passport.serializeUser(function(user, done) {
+    done(null, user.id)
+  })
 
+  passport.deserializeUser(function(id, done) {
+    User.findOne({ _id: id }, function (err, user) {
+      done(err, user)
+    })
+  })
+
+  // use these strategies
+  passport.use(local);
 };

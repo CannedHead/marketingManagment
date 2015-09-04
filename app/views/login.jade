@@ -1,70 +1,51 @@
-doctype html
-html(lang="en")
-  head
-    meta(charset="utf-8")
-    title Renoboy | Plan de millas
+doctype
+html.no-js(lang="en")
+head
+    title Gestión de clientes - Clínica loyola.
+    meta( charset='utf-8' )
+    meta( http-equiv='X-UA-Compatible', content='IE=edge' )
+    meta( name='viewport', content='width=device-width, initial-scale=1.0' )
+    meta( name='description', content='Baking Bootstrap Snippets with Jade' )
+    meta(charset="utf-8")        
+    meta(content="width=device-width, initial-scale=1" name="viewport")   
+    
+    <!-- FAVICON -->
+    link(href="https://s3-sa-east-1.amazonaws.com/cannedhead.canned/img/16x16.png" rel="shortcut icon" type="image/png") 
 
-    meta(name="description",content="Renoboy - Plan de millas")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-
-    link(href="favicon.png" rel="shortcut icon" type="image/png")  
+    <!-- CSS --> 
     link(href="/css/bootstrap.css", rel="stylesheet")
     link(href="/css/style.css", rel="stylesheet")
-    
-  body.bg    
-    .col-md-12.header
-        .col-md-2.col-md-offset-5
-            img.logo(src="/img/logo.png")
+  
+  body
     .container
-        .col-md-4.col-md-offset-1.textoLoginPanel.hidden-xs
-            h1.white.login Plan de Millas
-            h2.green.login Renoboy 2015
-            p Bienvenido al portal para el ingreso de ventas correspondiente al Plan de Millas Renoboy 2015, a continuación ingrese con su usuario y clave. 
-            p Si no tiene estos datos por favor contáctese con RENOBOY a los teléfonos:
-            p 
-                |   Tel: 742 - 2779
-                br 
-                |   Fax: 570-1630 
-                br
-                |   Línea de atención: 01 8000 510141
-        .col-md-4.col-md-offset-2
-            .panel.panel-default.signupPanel                    
-                .panel-body
-                    if (success!=null)
-                        .alert.alert-success #{success}
-                    if (error!=null)
-                        .alert.alert-danger #{error}
-                    if (flash!=null)
-                        .alert.alert-danger error
-                    form(action="/login",method="post", role="form" )
-                        .form-group
-                            input.form-control(name="email", type="email", placeholder="Email" required)
-                        .form-group
-                            input.form-control(name="password", type="password", placeholder="Contraseña" required)
-                        .form-group
-                            button.btn.btn-block.btn-login(type="submit") Ingresar
-                        .form-group
-                            a(data-toggle="modal", data-target="#forgotPswdModal", href="/#",data-dismiss="modal") Olvidó su contraseña?
-    .footer
-        .container
-            p.text-muted © 2015 Todos los derechos reservados.
-    <!-- Forgot Password Modal -->
-    .modal.fade#forgotPswdModal(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
-        .modal-dialog
-            .modal-content
-                .modal-header
-                    button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;     
-                    h4.modal-title ¿Olvidó su contraseña?                                    
-                .modal-body
-                    form(action="/reset-password",method="post", role="form")
-                        p Ingrese su direccion de correo asociada a su cuenta, y nosotros enviaremos un correo con las instrucciones.
-                        .form-group   
-                            label(for="email") Email                          
-                            input#email.form-control(type="email",name="email" ,placeholder="Email")
-                        br                        
-                        .form-group
-                            input.btn.btn-success.btn-block.btn-lg(type="submit" value="Enviar") 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
+      .col-xs-12.col-sm-4.col-sm-offset-4
+
+        form.form-signin
+          center
+            h1.form-signin-heading -Logo-      
+        label.sr-only(for='inputEmail') Usuario       
+        input#inputEmail.form-control(type='email', placeholder='Usuario', required='', autofocus='')        
+        label.sr-only(for='inputPassword') Contraseña   
+        input#inputPassword.form-control(type='password', placeholder='Constraseña', required='') 
+
+        .checkbox
+     
+            button.btn.btn-lg.btn-primary.btn-block(type='submit') Acceder
+            p
+              .pull-right
+                a(href='http://www.w3schools.com/html/') Olvidó su Contraseña
+
+                  
+                  
+
+
+
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js")
     script(src="/js/bootstrap.min.js")
+    script(src='../../assets/js/ie10-viewport-bug-workaround.js')
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js' )
+    script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js' )
+    script(src='../../assets/js/ie-emulation-modes-warning.js')
+    script(src='https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js')
+    script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
+    
