@@ -1,124 +1,133 @@
+@import url(https://fonts.googleapis.com/css?family=Ubuntu:500,400,300);
 
-body 
-/*
- * Base structure
- */
-
-/* Move down content because we have a fixed navbar that is 50px tall */
-body {
-  padding-top: 50px;
+html,body{
+  height: 100%;
+  width:100%;
+  font-family: 'Ubuntu', sans-serif;
 }
 
-
-/*
- * Global add-ons
- */
-
-.sub-header {
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
+a,
+a:hover,
+a:active,
+a:focus{
+  text-decoration: none;
+  outline: none !important;
 }
 
-/*
- * Top navigation
- * Hide default border to remove 1px line.
- */
-.navbar-fixed-top {
-  border: 0;
+a, button {
+  transition: all 0.3s ease 0s;
+}
+ 
+/* Login */
+
+.login{
+  background: url(http://loremflickr.com/g/1300/600/paris) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  min-height:100%;
+  height: 100%;
+  color:#FFF;
 }
 
-/*
- * Sidebar
- */
+.login .layer{
+  background-color: rgba(59,63,68,0.9);
+  width:100%;
+  height: 100%;
+  padding-top: 10%;
+}
 
-/* Hide for mobile, show later */
+.login h1{
+  margin-bottom: 20px;
+}
+
+.login h1.title a{
+  font-weight: 300;
+  color:#FFF;
+}
+
+.login h1.title a.active{
+  font-weight: 500;
+}
+
+.login .form-control{
+  background-color: transparent;
+  color:#fff;
+}
+
 .sidebar {
   display: none;
 }
+
+.nav-sidebar li.inactive {
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-bottom: 5px;
+  font-size: 85%;
+  font-weight: normal;
+  letter-spacing: 1px;
+  color: #51586A;
+  text-transform: uppercase;
+}
+
+.nav-sidebar li > a {
+  color:#FFF;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  margin-bottom: 2px;
+}
+
+.nav-sidebar li.active > a,
+.nav-sidebar li.active > a:hover,
+.nav-sidebar li.active > a:active,
+.nav-sidebar li.active > a:focus{
+  background-color: #1CA8DD;
+  color:#202734;
+  font-weight: 500;
+} 
+
+.nav-sidebar li > a:hover{
+  background-color: rgba(255,255,255,0.2);
+}
+
 @media (min-width: 768px) {
+
+  .navbar{
+    height: 80px;
+    background: #252830 none repeat scroll 0% 0%;
+    border-bottom: 1px solid #8E9299;
+    line-height: 80px !important;
+  }
+
   .sidebar {
     position: fixed;
-    top: 51px;
+    top: 80px;
     bottom: 0;
     left: 0;
     z-index: 1000;
     display: block;
-    padding: 20px;
     overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: #f5f5f5;
-    border-right: 1px solid #eee;
+    overflow-y: auto; 
+    background-color: #252830;
+    padding-top: 10px;
+  }
+  .navbar-nav > li > a {
+      padding-top: 30px;
+      padding-bottom: 30px;
+  }
+
+  .content{
+    padding-top: 100px;
   }
 }
 
-/* Sidebar navigation */
-.nav-sidebar {
-  margin-right: -21px; /* 20px padding + 1px border */
-  margin-bottom: 20px;
-  margin-left: -20px;
-}
-.nav-sidebar > li > a {
-  padding-right: 20px;
-  padding-left: 20px;
-}
-.nav-sidebar > .active > a,
-.nav-sidebar > .active > a:hover,
-.nav-sidebar > .active > a:focus {
-  color: #fff;
-  background-color: #428bca;
-}
 
 
-/*
- * Main content
- */
-
-.main {
-  padding: 20px;
-}
-@media (min-width: 768px) {
-  .main {
-    padding-right: 40px;
-    padding-left: 40px;
-  }
-}
-.main .page-header {
-  margin-top: 0;
-}
 
 
-/*
- * Placeholder dashboard ideas
- */
 
-.placeholders {
-  margin-bottom: 30px;
-  text-align: center;
-}
-.placeholders h4 {
-  margin-bottom: 0;
-}
-.placeholder {
-  margin-bottom: 20px;
-}
-.placeholder img {
-  display: inline-block;
-  border-radius: 50%;
-}{
-  font: 13px Helvetica, arial, freesans, clean, sans-serif;
-  line-height: 1.4;
-  color: #333333;
-  background: #fff;
-  padding: 50px;
-}
-
-
-.navbar{
-    height: 80px;
-    background: #202734 none repeat scroll 0% 0%;
-    border-bottom: 1px solid #8E9299;
-    line-height: 80px !important;
-}
 
 .user-img{
 	width:30px;

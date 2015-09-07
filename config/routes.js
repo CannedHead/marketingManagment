@@ -19,27 +19,21 @@ module.exports = function (app, passport) {
     });   
   });
 
-  app.get('/login', function(req, res) {
-    res.render('login', {
-      logged: req.isAuthenticated(),
-      user : req.user 
+  app.get('/users', function(req, res) {
+    res.render('users', {
+        title:'users',
+        users:[],
+        count: 1
     });   
   });
 
-  app.get('/dashboard', function(req, res) {
-    res.render('dashboard', {
-      logged: req.isAuthenticated(),
-      user : req.user 
+  app.get('/analytics', function(req, res) {
+    res.render('analytics', {
+        title:'analytics',
+        users:[],
+        count: 1
     });   
   });
-
-    app.get('/miembros', function(req, res) {
-    res.render('miembros', {
-      logged: req.isAuthenticated(),
-      user : req.user 
-    });   
-  });
-
 
   /**
    * Error handling

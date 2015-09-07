@@ -1,0 +1,55 @@
+extend dashboard
+block dash_content
+    .col-xs-12.panel-table 
+        .row.search-bar
+            .col-md-3.col-sm-3.col-xs-8.no-padding-right
+                input.form-control.material-shadow#search(type="text" placeholder="Search Email..")
+            .col-md-1.col-sm-1.col-xs-2.no-padding-left
+                button.btn.search.material-shadow( onclick="filterFamilias()" )
+                    i.fa.fa-search
+            .pull-right                
+                .dropdown.ellipsis-h
+                    button.btn.dropdown-toggle(type="button" id="dropdownOptions" data-toggle="dropdown" aria-expanded="true")
+                        i.fa.fa-ellipsis-h
+                    ul.dropdown-menu.dropdown-menu-right(role="menu" aria-labelledby="dropdownOptions")
+                        li(role="presentation")
+                            a(role="menuitem" tabindex="-1" href="#" onclick="blockModalFamilia()") Bloquear/Desbloquear
+                        li(role="presentation")
+                            a(role="menuitem" tabindex="-1" href="#" onclick="deleteModalFamilia()") Eliminar
+        .panel  
+            .table-responsive
+                table.table
+                    thead
+                        tr 
+                            th(style="width:2px;")
+                            th(style="width:2px;")
+                            th Name
+                            th Email
+                            th Date
+                            th &#218;ltimo ingreso
+                    tbody                       
+                        
+        if count < 10                
+            p.text-center 1-#{count} of #{count} Users
+        else
+            p.text-center 1-10 of #{count} Users
+        nav
+            .text-center
+                ul.pagination.material-shadow
+                    li.prev
+                        a(href="#" aria-label="Previous")
+                            span(aria-hidden="true") &laquo;
+                    li
+                        a(href="#") 1
+                    li
+                        a(href="#") 2
+                    li.active
+                        a(href="#") 3
+                    li
+                        a(href="#") 4
+                    li
+                        a(href="#") 5
+                    li.next
+                        a(href="#" aria-label="Next")
+                            span(aria-hidden="true") &raquo;
+    

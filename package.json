@@ -3,8 +3,8 @@
   "description": "A boilerplate application for express mongoose",
   "version": "1.0.0",
   "author": {
-    "name": "Madhusudhan Srinivasa",
-    "email": "me@madhums.me"
+    "name": "Juan David Florez",
+    "email": "jdavid@cannedhead.com"
   },
   "engines": {
     "node": "0.12.x"
@@ -28,7 +28,6 @@
     "jade" : "*",
     "method-override": "2.3.3",
     "mongoose": "4.0.6",
-    "mongoose-user": "latest",
     "morgan": "1.6.1",
     "passport": "0.2.2",
     "passport-local": "1.0.0",
