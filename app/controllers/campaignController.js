@@ -1,5 +1,5 @@
 var Campaign = require('../models/campaign');
-var CampaignField = require('../models/campanaField');
+var CampaignRegister = require('../models/campaignRegister');
 
 module.exports = {
 
@@ -12,7 +12,7 @@ module.exports = {
 
 		newC.save(function(err,campaign){
 			if(!err) {
-				return res.json(200,{error: false, message:'New campaign has been created', campaign:campaign);
+				return res.json(200,{error: false, message:'New campaign has been created', campaign:campaign});
 			} else {
 				console.log('ERROR: ' + err);
 				return res.json(500,{error:true, message:'Server connection error. Please try later'});
@@ -29,7 +29,7 @@ module.exports = {
 			if(!campaign){
 				return res.json(404,{error:true, message:'Campaign not found'});
 			} else {
-				return res.json(200,{error: false, campaigns: campaigns);
+				return res.json(200,{error: false, campaigns: campaigns});
 			}
 		});
 	},
@@ -44,7 +44,7 @@ module.exports = {
 				return res.json(404,{error:true, message:'Campaign not found'});
 			} else {
 				// Execute callback
-				return res.json(200,{error: false, campaign: campaign);
+				return res.json(200,{error: false, campaign: campaign});
 			}
 		});
 	},
@@ -55,7 +55,7 @@ module.exports = {
 				console.log('ERROR: ' + err);
 				return res.json(500,{error:true, message:'Server connection error. Please try later'});
 			} else {
-				return res.json(200,{error: false, campaigns: campaigns);
+				return res.json(200,{error: false, campaigns: campaigns});
 			}
 		});
 	}, 
@@ -72,7 +72,7 @@ module.exports = {
 
 				campaign.name = req.body.name || campaign.name;
 				campaign.active = req.body.active || campaign.active ;
-				campana.update = Date.now();
+				campana.updated = Date.now();
 
 				campaign.save(function (err, c){
 				  if(err){
@@ -99,7 +99,7 @@ module.exports = {
 	            campaign.remove(function(err) {
 	                if(!err) {
 	                    console.log('Campaign has been removed');
-	                    return res.json(200,{error: false, message: 'Campaign has been removed');
+	                    return res.json(200,{error: false, message: 'Campaign has been removed'});
 	                } else {
 	                    console.log('ERROR: ' + err);
 	                    return res.json(500,{error:true, message:'Server connection error. Please try later'});

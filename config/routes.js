@@ -4,6 +4,8 @@
  */
 
 var mongoose = require('mongoose');
+var campaignController = require('../app/controllers/campaignController');
+var campaignRegisterController = require('../app/controllers/campaignRegisterController');
 
 /**
  * Expose
@@ -33,6 +35,18 @@ module.exports = function (app, passport) {
         count: 1
     });   
   });
+
+  /*===CAMPAIGN CRUD===*/
+  app.post('/campaign',campaignController.createCampaign);
+  app.get('/campaign/:id',campaignController.readCampaignById);
+  app.put('/campaign/:id',campaignController.updateCampaign);
+  app.delete('/campaign/:id',campaignController.deleteCampaign);
+
+  /*===CAMPAIGN REGISTER===*/
+  app.post('/register',campaignRegisterController.createCampaignRegister);
+  app.get('/register/:id',campaignRegisterController.readCampaignRegisterById);
+  app.put('/register/:id',campaignRegisterController.updateCampaignRegister);
+  app.delete('/register/:id',campaignRegisterController.deleteCampaignRegister);
 
   /**
    * Error handling
