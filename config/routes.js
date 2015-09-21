@@ -4,7 +4,6 @@
  */
 
 var mongoose = require('mongoose');
-var home = require('home');
 
 /**
  * Expose

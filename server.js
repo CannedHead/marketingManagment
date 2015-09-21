@@ -12,6 +12,7 @@ var config = require('config');
 var app = express();
 var port = process.env.PORT || 3000;
 
+
 // Connect to mongodb
 var connect = function () {
   var options = { server: { socketOptions: { keepAlive: 1 } } };
@@ -33,8 +34,8 @@ require('./config/passport')(passport, config);
 // Bootstrap application settings
 require('./config/express')(app, passport);
 
-// Bootstrap routes
+// Bootstrap routess
 require('./config/routes')(app, passport);
 
 app.listen(port);
-console.log('Express app started on port ' + port);
+console.log('Listening on port ' + port);

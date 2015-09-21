@@ -23,16 +23,32 @@ var pkg = require('../package.json');
 
 var env = process.env.NODE_ENV || 'development';
 
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+
+    // intercept OPTIONS method
+    if ('OPTIONS' == req.method) {
+      res.send(200);
+    }
+    else {
+      next();
+    }
+};
+
 /**
  * Expose
  */
-
 module.exports = function (app, passport) {
 
   // Compression middleware (should be placed before express.static)
   app.use(compression({
     threshold: 512
   }));
+
+  // crossorigin middleware
+  app.use(allowCrossDomain);
 
   // Static files middleware
   app.use(express.static(config.root + '/public'));
